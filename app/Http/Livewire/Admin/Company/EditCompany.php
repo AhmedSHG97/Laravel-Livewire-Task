@@ -39,7 +39,7 @@ class EditCompany extends Component
             "form.email" => "required|email|min:5",
             "form.name" => "required|string|min:2",
             "form.website" => "required|url",
-            "form.logo" => "nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048",
+            "form.logo" => "nullable",
         ]);
     }
     public function mount(){
@@ -65,6 +65,7 @@ class EditCompany extends Component
             "form.email" => "required|email|min:5",
             "form.name" => "required|string|min:2",
             "form.website" => "required|url",
+            "form.logo" => "nullable",
         ]);
         $this->form['logo']  = $this->storeImage();
         if(!$this->form['logo']){
@@ -79,7 +80,7 @@ class EditCompany extends Component
             $companyData->refresh();
         }
         session()->flash('Message', "Company is not found");
-        return redirect('admin/companies');
+        return redirect('admin/company/edit/'.$company_id);
     }
     
     private function storeImage()

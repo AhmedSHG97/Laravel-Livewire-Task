@@ -8,7 +8,8 @@
                     </div>
                     <div class="card-body pb-0">
                         {{-- <a href="{{ url('admin/company/create') }}" class="btn btn-primary">Create</a> --}}
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal"><i class="fa fa-plus"></i> Add Category</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal"><i
+                                class="fa fa-plus"></i> Add Category</button>
                     </div>
 
                     <div wire:ignore.self class="modal fade" id="addModal" data-bs-backdrop="static"
@@ -25,7 +26,7 @@
                                         <form wire:submit.prevent="store">
                                             <label>Name</label>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control" id="name"   aria-label="Name"
+                                                <input type="text" class="form-control" id="name" aria-label="Name"
                                                     aria-describedby="name-addon" wire:model="form.name">
                                                 @error('form.name')
                                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
@@ -33,36 +34,40 @@
                                             </div>
                                             <label>Email</label>
                                             <div class="mb-3">
-                                                <input type="email" class="form-control" id="email"  placeholder="Email"
-                                                    aria-label="Email" aria-describedby="email-addon" wire:model="form.email">
+                                                <input type="email" class="form-control" id="email"
+                                                    placeholder="Email" aria-label="Email"
+                                                    aria-describedby="email-addon" wire:model="form.email">
                                                 @error('form.email')
                                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                             <label>Website</label>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control" id="website"  placeholder="Website"
-                                                    aria-label="Website" aria-describedby="website-addon" wire:model="form.website">
+                                                <input type="text" class="form-control" id="website"
+                                                    placeholder="Website" aria-label="Website"
+                                                    aria-describedby="website-addon" wire:model="form.website">
                                                 @error('form.website')
                                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                             <label>logo</label>
                                             <div class="mb-3">
-                                                @if($form['logo'])
-                                                    <img src="{{$form['logo']}}" style="height:100px; width:100px">
+                                                @if ($form['logo'])
+                                                    <img src="{{ $form['logo'] }}" style="height:100px; width:100px">
                                                 @endif
                                                 <input type="file" class="form-control" id="logo" placeholder="Logo"
-                                                    aria-label="Logo" aria-describedby="logo-addon" wire:change="$emit('fileChoosen')">
+                                                    aria-label="Logo" aria-describedby="logo-addon"
+                                                    wire:change="$emit('fileChoosen')">
                                                 @error('form.logo')
                                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
                                                 @enderror
                                             </div>
                                             <center>
-                                            <div class="text-center col-md-4">
-                                                <button type="submit" class="btn bg-gradient-info w-100 mt-4 mb-0">Submit</button>
-                                            </div>
-                                        </center>
+                                                <div class="text-center col-md-4">
+                                                    <button type="submit"
+                                                        class="btn bg-gradient-info w-100 mt-4 mb-0">Submit</button>
+                                                </div>
+                                            </center>
                                         </form>
                                     </div>
                                 </div>
@@ -140,5 +145,14 @@
     window.addEventListener('closeModal', event => {
         let button = document.querySelector(".close");
         button.click();
+    });
+    window.livewire.on('fileChoosen', () => {
+        let inputField = document.getElementById('logo')
+        let file = inputField.files[0]
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            window.livewire.emit('fileUpload', reader.result)
+        }
+        reader.readAsDataURL(file);
     });
 </script>
