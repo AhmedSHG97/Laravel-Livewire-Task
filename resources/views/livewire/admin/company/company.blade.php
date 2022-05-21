@@ -26,7 +26,7 @@
                                         <form wire:submit.prevent="store">
                                             <label>Name</label>
                                             <div class="mb-3">
-                                                <input type="text" class="form-control" id="name" aria-label="Name"
+                                                <input type="text" class="form-control" placeholder="Name" id="name" aria-label="Name"
                                                     aria-describedby="name-addon" wire:model="form.name">
                                                 @error('form.name')
                                                     <p class="text-danger text-xs mt-2">{{ $message }}</p>
